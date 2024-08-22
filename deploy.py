@@ -31,13 +31,13 @@ def is_random_string(s):
 translator = Translator()
 
 # Load your pre-trained model
-model_form = tf.keras.models.load_model('D:/itconvert/text-detection/best_model.h5')
+model_form = tf.keras.models.load_model('best_model.h5')
 
 # Define your tokenizer (replace this with your tokenizer instance)
 
 
 # Save the model
-token_form = joblib.load("D:/itconvert/text-detection/nlp-streamlit/tokenizer.pkl")
+token_form = joblib.load("tokenizer.pkl")
 # Streamlit UI
 st.title("Text Sentiment Analysis")
 st.write("Enter text to analyze whether it's a potential suicide post or not.")
