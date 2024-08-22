@@ -3,8 +3,11 @@ from googletrans import Translator
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import tensorflow as tf
 import joblib
+import nltk
 from nltk.corpus import words
 
+# Download the words corpus if you haven't already
+nltk.download('words')
 
 # Set of English words
 word_set = set(words.words())
