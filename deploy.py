@@ -3,18 +3,38 @@ from googletrans import Translator
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import tensorflow as tf
 import joblib
+from nltk.corpus import words
+
+
+# Set of English words
+word_set = set(words.words())
+
+def is_random_string(s):
+    # Tokenize the string into words
+    tokens = s.split()
+
+    # Check if any of the tokens are in the dictionary
+    for token in tokens:
+        if token.lower() in word_set:
+            return False
+    return True
+
+
+
+
+
 
 # Initialize the Translator
 translator = Translator()
 
 # Load your pre-trained model
-model_form = tf.keras.models.load_model('best_model.h5')
+model_form = tf.keras.models.load_model('D:/itconvert/text-detection/best_model.h5')
 
 # Define your tokenizer (replace this with your tokenizer instance)
 
 
 # Save the model
-token_form = joblib.load("tokenizer.pkl")
+token_form = joblib.load("D:/itconvert/text-detection/nlp-streamlit/tokenizer.pkl")
 # Streamlit UI
 st.title("Text Sentiment Analysis")
 st.write("Enter text to analyze whether it's a potential suicide post or not.")
@@ -23,7 +43,12 @@ st.write("Enter text to analyze whether it's a potential suicide post or not.")
 user_text = st.text_area("Text to Analyze", "")
 
 if st.button('Analyze'):
-    if user_text:
+    if(len(user_text) <= 15):
+        st.warning("Teks kamu kurang panjang")
+    elif is_random_string(user_text) == True:
+        st.write("Prediction: Bukan Bunuh Diri")
+        st.write(f"Akurasi: 0%")
+    elif user_text:
         # Translate text from Indonesian to English
         translated = translator.translate(user_text, src='id', dest='en')
         translated_text = translated.text
